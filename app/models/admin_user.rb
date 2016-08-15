@@ -9,6 +9,8 @@ class AdminUser < ActiveRecord::Base
   has_many :section_edits
   has_many :sections, :through => :section_edits
 
+  scope :sorted, lambda {order("adminuser.last_name DSC")}
+
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
   FORBIDDEN_USERNAMES = ['littlebopeep','humptydumpty','marymary']
 
@@ -51,6 +53,10 @@ class AdminUser < ActiveRecord::Base
     if Time.now.wday == 6
       errors[:base] << "No new users on Saturdays."
     end
+  end
+
+  def name
+    @name = @firt_name + @lastname
   end
 
 end

@@ -3,7 +3,7 @@ class AccessController < ApplicationController
   layout 'admin'
 
   before_action :confirm_logged_in, :except => [:loggin,
-  :attemp_login, :logout]
+  :attempt_login, :logout]
 
   def index
     # display text & links
