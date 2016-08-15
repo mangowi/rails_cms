@@ -29,7 +29,7 @@ class AdminUsersController < ApplicationController
     @admin_user = AdminUser.find(params[:id])
     if @admin_user.update_attributes(admin_params)
       flash[:notice] = "Admin updates"
-      redirect_to(:action => 'show', :id => @admin_user.id)
+      redirect_to(:action => 'index')
     else
       redirect_to('edit')
     end
@@ -47,7 +47,7 @@ class AdminUsersController < ApplicationController
 
   private
   def admin_params
-    params.require(:admin_user).permit(:first_name, :last_name, :email, :password)
+    params.require(:admin_user).permit(:first_name, :last_name, :email, :username,  :password)
   end
 
 end

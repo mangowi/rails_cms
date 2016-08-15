@@ -9,7 +9,7 @@ class AdminUser < ActiveRecord::Base
   has_many :section_edits
   has_many :sections, :through => :section_edits
 
-  scope :sorted, lambda {order("adminuser.last_name DSC")}
+  scope :sorted, lambda {order("adminuser.last_name ASC, adminuser.first_name ASC")}
 
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
   FORBIDDEN_USERNAMES = ['littlebopeep','humptydumpty','marymary']
@@ -41,6 +41,13 @@ class AdminUser < ActiveRecord::Base
   validate :username_is_allowed
   #validate :no_new_users_on_saturday, :on => :create
 
+
+  def name
+    first_name +  ' ' + last_name
+  end
+
+
+  private
   def username_is_allowed
     if FORBIDDEN_USERNAMES.include?(username)
       errors.add(:username, "has been restricted from use.")
@@ -53,10 +60,6 @@ class AdminUser < ActiveRecord::Base
     if Time.now.wday == 6
       errors[:base] << "No new users on Saturdays."
     end
-  end
-
-  def name
-    @name = @firt_name + @lastname
   end
 
 end
