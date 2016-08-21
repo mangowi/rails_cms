@@ -21,4 +21,11 @@ class DemoController < ApplicationController
   def escape_output
 
   end
+
+  def make_error
+    #Threee most common errors
+    #render(:text => "test" #sntax error
+    #render(:text => @somethign.upcase) #undefined method
+    #render(:Text => "1"  1) #can't convert type
+  end
 end
