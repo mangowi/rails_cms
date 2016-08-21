@@ -10,7 +10,7 @@ class AccessController < ApplicationController
   end
 
   def login
-    # login form
+
   end
 
   def attempt_login

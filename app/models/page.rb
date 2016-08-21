@@ -3,6 +3,10 @@ class Page < ApplicationRecord
   # has_and_belongs_to_many :admin_users
   #its much better to say
   has_and_belongs_to_many :editors, :class_name =>  "AdminUser"
+  acts_as_list :scope => :subject
+
+  before_validation :add_default_permalink
+  after_save :touch_subject
 
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
@@ -20,4 +24,16 @@ class Page < ApplicationRecord
     where(["name LIKE ?", "%#{query}%"])
   }
 
+  private
+  def add_default_permalink
+    if permalink.blank?
+      self.permalink = "#{id}-#{name.parameterize}"
+    end
+  end
+
+  def touch_subject
+    #touch is similar to:
+    #subject.update_attribute(:update_at, Time.now)
+    subject.touch
+  end
 end

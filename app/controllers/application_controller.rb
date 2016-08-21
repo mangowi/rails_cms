@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
       redirect_to(:controller => 'access', :action => 'login')
       return false # halts the before_action
     else
-      return true
+      return ;
     end
   end
 
